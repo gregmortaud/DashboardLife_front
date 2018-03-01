@@ -1,20 +1,40 @@
 import React, { Component } from "react";
 import { PageHeader, ListGroup } from "react-bootstrap";
 import "./Home.css";
+import { createApolloFetch } from "apollo-fetch";
+
+const API = 'http://localhost:3500/graphql';
+const DEFAULT_QUERY = 'query PostForStat { general_stat { newMovies newTravels } }';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true,
-      notes: []
+      general_stat: [],
+      isLoading: false,
+      error: null,
     };
   }
 
-  // renderNotesList(notes) {
-  //   return null;
-  // }
+  componentDidMount() {
+    this.setState({ isLoading: true });
+
+    const fetch = createApolloFetch({
+      uri: API,
+    });
+    fetch({ query: DEFAULT_QUERY })
+    .then(response => {
+      if (response.data) {
+        console.log(response);
+        return response;
+      } else {
+        throw new Error('Something went wrong ...');
+      }
+    })
+    .then(result => this.setState({ general_stat: result.data.general_stat, isLoading: false }))
+    .catch(error => this.setState({ error, isLoading: false }));
+  }
 
   renderLander() {
     return (
@@ -26,12 +46,56 @@ class Home extends Component {
   }
 
   renderHome() {
+    const { general_stat, isLoading, error } = this.state;
+
+    if (error) {
+      return (
+        <div className="alert alert-danger">
+            {error.message}
+        </div>
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <div className="container">
+          <button className="btn btn-sm btn-warning">
+            <span className="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+            </span> Loading...
+          </button>
+        </div>
+      );
+     }
+
+     var newMovies = null;
+     general_stat[0] == null ? newMovies = "loading.." : newMovies = general_stat[0].newMovies;
     return (
-      <div className="notes">
+      <div>
         <PageHeader>Welcome Gregoire</PageHeader>
-        <ListGroup>
-          // {!this.state.isLoading && this.renderHomeList(this.state.notes)}
-        </ListGroup>
+          <div className="row">
+              <div className="col-lg-3 col-md-6">
+                  <div className="panel panel-primary">
+                      <div className="panel-heading">
+                          <div className="row">
+                              <div className="col-xs-3">
+                                  <i className="fa fa-film fa-4x"></i>
+                              </div>
+                              <div className="col-xs-9 text-right">
+                                  <div className="huge">{ newMovies }</div>
+                                  <div>New Movies!</div>
+                              </div>
+                          </div>
+                      </div>
+                      <a href="/movies">
+                          <div className="panel-footer">
+                              <span className="pull-left">View Movies</span>
+                              <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
+                              <div className="clearfix"></div>
+                          </div>
+                      </a>
+                  </div>
+              </div>
+            </div>
       </div>
     );
   }
