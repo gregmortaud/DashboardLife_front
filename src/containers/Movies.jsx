@@ -56,8 +56,21 @@ class Movies extends Component {
       );
      }
 
+     if (movie.length < 1) {
+       return (
+         <div className="alert alert-warning" role="alert">
+           No movies available
+         </div>
+       );
+     }
+
     var i = 0;
     var movieContainer = [];
+
+    // movieContainer.push(
+    //   <button type="button" class="btn btn-primary btn-lg">Refresh list</button>
+    // );
+
     Async.whilst(
       function () { return movie[i] != null; },
       function (callLoop) {
@@ -70,7 +83,6 @@ class Movies extends Component {
         movie[i] == null ? synopsis = "loading.." : synopsis = movie[i].synopsis;
         movie[i] == null ? link_download = "loading.." : link_download = movie[i].link_download;
         movieContainer.push(
-          <div>
             <div className="col-lg-4">
                 <div className="panel panel-default">
                     <div className="panel-heading">
@@ -78,18 +90,22 @@ class Movies extends Component {
                     </div>
                     <div className="panel-body">
                         <img src={ link_img } />
-                        <p>
-                          { synopsis }
-                        </p>
+                        <div className="movieContainer">
+                          <p>
+                            { synopsis }
+                          </p>
+                        </div>
                     </div>
                     <div className="panel-footer">
                         <button type="button" className="btn btn-success">
                           <a href={ link_download } rel="nofollow" title={ name }>Download</a>
                       </button>
-                    </div>
+                      <button type="button" className="btn btn-primary">
+                        Streaming
+                    </button>
+                      </div>
                 </div>
             </div>
-          </div>
         );
         i ++;
         callLoop();
@@ -99,7 +115,7 @@ class Movies extends Component {
         return ;
       }
     )
-    return movieContainer;
+    return (movieContainer);
   }
 }
 

@@ -12,3 +12,17 @@
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
+
+.movieContainer {
+  height: 200px;
+  overflow: auto;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: none;
+}
