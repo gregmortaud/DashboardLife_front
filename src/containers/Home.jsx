@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { PageHeader, ListGroup } from "react-bootstrap";
 import "./Home.css";
 import { createApolloFetch } from "apollo-fetch";
+import config from "../config.js";
 
-const API = 'http://localhost:3500/graphql';
+const API = config.api.uri;
 const DEFAULT_QUERY = 'query PostForStat { general_stat { newMovies newTravels } }';
 
 class Home extends Component {

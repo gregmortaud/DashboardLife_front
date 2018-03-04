@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./Movies.css";
 import { createApolloFetch } from "apollo-fetch";
 import Async from "async";
+import config from "../config.js";
 
-const API = 'http://localhost:3500/graphql';
+const API = config.api.uri;
 const DEFAULT_QUERY = 'query PostForMovie { movie { name year link_download link_img synopsis} }';
 
 class Movies extends Component {
