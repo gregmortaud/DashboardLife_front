@@ -17,29 +17,7 @@ class App extends Component {
       isAuthenticating: true
     };
   }
-
-  connect() {
-    const con = mysql.createConnection({
-      host: 'localhost',
-      user: 'user',
-      password: 'password',
-    });
-
-    con.connect((err) => {
-      if(err){
-        console.log('Error connecting to Db');
-        return;
-      }
-      console.log('Connection established');
-    });
-
-    con.end((err) => {
-      // The connection is terminated gracefully
-      // Ensures all previously enqueued queries are still
-      // before sending a COM_QUIT packet to the MySQL server.
-    });    
-  }
-
+  
   userHasAuthenticated = authenticated => {
     this.setState({ isAuthenticated: authenticated });
   }
@@ -76,14 +54,17 @@ class App extends Component {
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Dash of life</Link>
+              <Link to="/">Gregs list</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
               {this.state.isAuthenticated
-                ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
+                ? [
+                  <NavItem onClick={this.handleLogout}>Logout</NavItem>,
+                  <NavItem href="/profil">Profil</NavItem>
+                ]
                 : [
                     // <RouteNavItem key={1} href="/signup">
                     //   Signup

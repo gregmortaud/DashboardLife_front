@@ -41,7 +41,7 @@ class Home extends Component {
     return (
       <div className="lander">
         <h1>Greg's list</h1>
-        <p>By Greg for Greg</p>
+        <p>By Greg for Greg's friend</p>
       </div>
     );
   }
@@ -87,7 +87,7 @@ class Home extends Component {
                               </div>
                           </div>
                       </div>
-                      <a href="/movies">
+                      <a className="link_movies" href="/movies">
                           <div className="panel-footer">
                               <span className="pull-left">View Movies</span>
                               <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>

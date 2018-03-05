@@ -69,9 +69,15 @@ class Movies extends Component {
     var movieContainer = [];
 
     // movieContainer.push(
-    //   <button type="button" class="btn btn-primary btn-lg">Refresh list</button>
+    //   <div class="input-group custom-search-form">
+    //       <input type="text" class="form-control" placeholder="Search..."/>
+    //       <span class="input-group-btn">
+    //       <button class="btn btn-default" type="button">
+    //           <i class="fa fa-search"></i>
+    //       </button>
+    //     </span>
+    //   </div>
     // );
-
     Async.whilst(
       function () { return movie[i] != null; },
       function (callLoop) {
